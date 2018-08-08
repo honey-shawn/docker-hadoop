@@ -5,12 +5,14 @@ MAINTAINER honey-shawn
 USER root
 
 # install dev tools
-RUN yum clean all; \
-    rpm --rebuilddb; \
-    yum install -y curl which tar sudo openssh-server openssh-clients rsync
+RUN yum clean all \
+    && rpm --rebuilddb \
+    && yum install -y curl which tar sudo openssh-server openssh-clients rsync \
+    && yum clean all \
+    && yum update -y libselinux \
+    && yum clean all
 # update libselinux. see https://github.com/sequenceiq/hadoop-docker/issues/14
-#RUN yum update -y libselinux
-RUN yum update -y && yum install libselinux -y
+RUN yum update -y libselinux
 
 # passwordless ssh
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key

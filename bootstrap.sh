@@ -9,16 +9,16 @@ rm /tmp/*.pid
 # installing libraries if any - (resource urls added comma separated to the ACP system variable)
 cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
 
-# core-site.xml 设置namenode
-sed s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+# core-site.xml set namenode
+sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
 
-# hdfs-site.xml 设置secondary
-sed s/HOSTNAME/$SECONDARY/ /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+# hdfs-site.xml set secondary
+sed -i s/HOSTNAME/$SECONDARY/ /usr/local/hadoop/etc/hadoop/hdfs-site.xml
 
-# yarn-site.xml 设置ResourceManager
-sed s/HOSTNAME/$RM/ /usr/local/hadoop/etc/hadoop/yarn-site.xml
+# yarn-site.xml set ResourceManager
+sed -i s/HOSTNAME/$RM/ /usr/local/hadoop/etc/hadoop/yarn-site.xml
 
-# slaves yarn的节点
+# slaves: set node of yarn
 echo "$NAMENODE\n $SECONDARY\n $RM\n" /usr/local/hadoop/etc/hadoop/slaves
 
 

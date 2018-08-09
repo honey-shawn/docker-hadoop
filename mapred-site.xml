@@ -1,5 +1,5 @@
 <configuration>
-    <!-- 指定mr运行在yarn上 -->
+    <!-- ensure mapreduce with yarn -->
     <property>
         <name>mapreduce.framework.name</name>
         <value>yarn</value>

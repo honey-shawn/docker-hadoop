@@ -1,27 +1,46 @@
-# Hadoop2.7.1 Docker image
+# docker-Hadoop:2.7.6镜像
 使用docker完成hadoop完全分布式搭建
 
-# Build the image
+# 组件版本
+* hadoop2.7.6
+* JDK1.8
 
-If you'd like to try directly from the Dockerfile you can build the image as:
 
-```
-docker build  -t honeyshawn/hadoop:2.7.1 .
-```
-# Pull the image
-
-The image is also released as an official Docker image from Docker's automated build repository - you can always pull or refer the image when launching containers.
+# 构建docker-hadoop镜像
 
 ```
-docker pull honeyshawn/hadoop:2.7.1
+docker build  -t honeyshawn/hadoop:2.7.6 .
 ```
-
-# Start a container
-
-In order to use the Docker image you have just build or pulled use:
-
-**Make sure that SELinux is disabled on the host. If you are using boot2docker you don't need to do anything.**
+# 拉取docker-hadoop镜像
 
 ```
-docker run -it honeyshawn/hadoop:2.7.1 /etc/bootstrap.sh -bash
+docker pull honeyshawn/hadoop:2.7.6
 ```
+
+# 使用docker-hadoop镜像构建Hadoop集群
+
+**需要配置的参数**
+```sbtshell
+# namenode所在容器的容器名
+NAMENODE=namenode
+# secondary所在容器的容器名
+SECONDARY=secondary
+# ResourceManager所在容器的容器名
+RM=resource-manager
+```
+
+参考run-example文件夹的使用
+
+**案例集群部署规划：**
+
+|	|namenode|	resource-manager|	secondary|
+| ------------- |:-------------:| -----:|-----:|
+|HDFS|NameNode/DataNode|DataNode|SecondaryNameNode/DataNode|
+|YARN|NodeManager|ResourceManager/NodeManager|NodeManager|
+
+**启动hadoop集群和yarn**
+```shell
+docker-compose exec namenode /usr/local/hadoop/sbin/start-dfs.sh
+docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
+```
+

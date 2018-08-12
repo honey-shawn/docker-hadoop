@@ -10,7 +10,9 @@ rm /tmp/*.pid
 cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
 
 # core-site.xml set namenode
-sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template
+
+mv /usr/local/hadoop/etc/hadoop/core-site.xml.template  /usr/local/hadoop/etc/hadoop/core-site.xml
 
 # hdfs-site.xml set secondary
 sed -i s/HOSTNAME/$SECONDARY/ /usr/local/hadoop/etc/hadoop/hdfs-site.xml
@@ -19,12 +21,14 @@ sed -i s/HOSTNAME/$SECONDARY/ /usr/local/hadoop/etc/hadoop/hdfs-site.xml
 sed -i s/HOSTNAME/$RM/ /usr/local/hadoop/etc/hadoop/yarn-site.xml
 
 # slaves: set node of yarn
-echo "$NAMENODE\n $SECONDARY\n $RM\n" /usr/local/hadoop/etc/hadoop/slaves
+echo "$NAMENODE"  > /usr/local/hadoop/etc/hadoop/slaves
+echo "$SECONDARY" >> /usr/local/hadoop/etc/hadoop/slaves
+echo "$RM" >> /usr/local/hadoop/etc/hadoop/slaves
 
 
 service sshd start
-$HADOOP_PREFIX/sbin/start-dfs.sh
-$HADOOP_PREFIX/sbin/start-yarn.sh
+# $HADOOP_PREFIX/sbin/start-dfs.sh
+# $HADOOP_PREFIX/sbin/start-yarn.sh
 $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
 
 if [[ $1 == "-d" ]]; then

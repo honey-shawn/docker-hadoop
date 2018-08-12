@@ -1,0 +1,34 @@
+version: '2'
+services:
+  namenode:
+    image: honeyshawn/docker-hadoop:2.7.6
+    container_name: namenode
+    hostname: namenode
+    ports:
+        - "50070:50070"
+        - "49707:49707"
+    restart: always
+    environment:
+        - NAMENODE=namenode #namenode
+        - SECONDARY=secondary # seconary
+        - RM=resource-manager # yarn resource manager
+  resource-manager:
+    image: honeyshawn/docker-hadoop:2.7.6
+    hostname: resource-manager
+    container_name: resource-manager
+    ports:
+        - "8088:8088"
+    restart: always
+    environment:
+        - NAMENODE=namenode
+        - SECONDARY=secondary
+        - RM=resource-manager
+  secondary:
+    image: honeyshawn/docker-hadoop:2.7.6
+    container_name: secondary
+    hostname: secondary
+    restart: always
+    environment:
+        - NAMENODE=namenode
+        - SECONDARY=secondary
+        - RM=resource-manager

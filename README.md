@@ -1,4 +1,4 @@
-# docker-Hadoop:2.7.6镜像
+# honeyshawn/hadoop:2.7.6镜像
 使用docker完成hadoop完全分布式搭建
 
 # 组件版本
@@ -6,18 +6,18 @@
 * JDK1.8
 
 
-# 构建docker-hadoop镜像
+# 构建hadoop镜像
 
 ```
 docker build  -t honeyshawn/hadoop:2.7.6 .
 ```
-# 拉取docker-hadoop镜像
+# 拉取hadoop镜像
 
 ```
 docker pull honeyshawn/hadoop:2.7.6
 ```
 
-# 使用docker-hadoop镜像构建Hadoop集群
+# 使用hadoop镜像构建Hadoop集群
 
 **需要配置的参数**
 ```sbtshell

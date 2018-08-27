@@ -11,8 +11,9 @@ cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; 
 
 # core-site.xml set namenode
 sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template
-
 mv /usr/local/hadoop/etc/hadoop/core-site.xml.template  /usr/local/hadoop/etc/hadoop/core-site.xml
+# mapred-site.xml set jobhistory
+sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/mapred-site.xml
 
 # hdfs-site.xml set secondary
 sed -i s/HOSTNAME/$SECONDARY/ /usr/local/hadoop/etc/hadoop/hdfs-site.xml
@@ -29,7 +30,7 @@ echo "$RM" >> /usr/local/hadoop/etc/hadoop/slaves
 service sshd start
 # $HADOOP_PREFIX/sbin/start-dfs.sh
 # $HADOOP_PREFIX/sbin/start-yarn.sh
-$HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
+# $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
 
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done

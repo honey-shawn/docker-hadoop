@@ -4,4 +4,13 @@
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
     </property>
+    <!-- set jobhistory-->
+    <property>
+        <name>mapreduce.jobhistory.address</name>
+        <value>HOSTNAME:10020</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.address</name>
+        <value>HOSTNAME:19888</value>
+    </property>
 </configuration>

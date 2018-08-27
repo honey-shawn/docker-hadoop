@@ -43,4 +43,8 @@ RM=resource-manager
 docker-compose exec namenode /usr/local/hadoop/sbin/start-dfs.sh
 docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
 ```
+**案例启动**
+```shell
+sh run.sh
+```
 

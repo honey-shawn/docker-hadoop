@@ -5,5 +5,11 @@
           <value>hdfs://HOSTNAME:9000</value>
       </property>
 
+      <!-- set hadoop tmp dir -->
+      <property>
+          <name>hadoop.tmp.dir</name>
+          <value>/usr/local/hadoop/data/tmp</value>
+      </property>
+
   </configuration>
 

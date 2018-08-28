@@ -1,4 +1,5 @@
-FROM sequenceiq/pam:centos-6.5
+#FROM sequenceiq/pam:centos-6.5
+FROM honeyshawn/pam:centos-6.5
 
 MAINTAINER honey-shawn
 

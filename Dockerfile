@@ -106,6 +106,11 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
 
+# create hadoop tmp dir, so that it's volumed
+RUN mkdir -p  /usr/local/hadoop/data
+
+VOLUME /usr/local/hadoop/data
+
 CMD ["/etc/bootstrap.sh", "-d"]
 
 # Hdfs ports
@@ -116,3 +121,4 @@ EXPOSE 19888
 EXPOSE 8030 8031 8032 8033 8040 8042 8088
 #Other ports
 EXPOSE 49707 2122
+

@@ -5,30 +5,35 @@ services:
     container_name: namenode
     hostname: namenode
     ports:
-        - "50070:50070"
+        - "50070:50070"  # namenode url
         - "49707:49707"
-    restart: always
-    environment:
-        - NAMENODE=namenode #namenode
-        - SECONDARY=secondary # seconary
-        - RM=resource-manager # yarn resource manager
+        - "19888:19888"  # jobhistory url
+        - "10020:10020"  # jobhistory
+        - "9000:9000"    # namenode
+    volumes:
+      - "/Users/honey-shawn/data/hadoopData/namenode:/usr/local/hadoop/data"
+    env_file:
+      - "./hadoop.env"
+
   resource-manager:
     image: honeyshawn/hadoop:2.7.6
     hostname: resource-manager
     container_name: resource-manager
     ports:
-        - "8088:8088"
-    restart: always
-    environment:
-        - NAMENODE=namenode
-        - SECONDARY=secondary
-        - RM=resource-manager
+      - "8088:8088"  # yarn url
+    volumes:
+      - "/Users/honey-shawn/data/hadoopData/resouceManager:/usr/local/hadoop/data"
+    env_file:
+      - "./hadoop.env"
+
   secondary:
     image: honeyshawn/hadoop:2.7.6
     container_name: secondary
     hostname: secondary
-    restart: always
-    environment:
-        - NAMENODE=namenode
-        - SECONDARY=secondary
-        - RM=resource-manager
+    ports:
+      - "50090:50090"  # SecondaryNameNode url
+    volumes:
+      - "/Users/honey-shawn/data/hadoopData/secondaryNamenode:/usr/local/hadoop/data"
+    env_file:
+      - "./hadoop.env"
+

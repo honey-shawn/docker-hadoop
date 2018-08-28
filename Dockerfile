@@ -75,7 +75,7 @@ ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/java/default\n:' $HADOOP_PREFIX/etc/hadoop/yarn-env.sh
 
 
-#格式化
+# init namenode
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 
 # fixing the libhadoop.so like a boss
@@ -106,9 +106,7 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
 
-# create hadoop tmp dir, so that it's volumed
-RUN mkdir -p  /usr/local/hadoop/data
-
+# volume hadoop tmp dir,so that
 VOLUME /usr/local/hadoop/data
 
 CMD ["/etc/bootstrap.sh", "-d"]

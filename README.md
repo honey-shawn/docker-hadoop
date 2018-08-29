@@ -25,14 +25,13 @@ docker pull honeyshawn/hadoop:2.7.6
 * NAMENODE，namenode所在容器的容器名
 * SECONDARY，secondaryNamenode所在容器的容器名
 * RM，ResourceManager所在容器的容器名
-* IS_NAMENODE，可选参数。yes标识此容器为namenode节点，会相应的去初始化namenode，并启动集群；
-  若不配此项，则可以手动去执行命令启动集群,例如：
-  ```shell
+
+注意：docker-compose需要配置hostname，且与容器名一致，方可将hdfs集群运行起来，反之则需要手动进入容器启动服务：
+```$xslt
   docker-compose exec namenode /usr/local/hadoop/bin/hdfs namenode -format
   docker-compose exec namenode /usr/local/hadoop/sbin/start-dfs.sh
   docker-compose exec namenode /usr/local/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
-  docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
-  ```
+```
 
 # hadoop完全分布式集群案例使用（run-example文件夹）
 
@@ -49,17 +48,9 @@ docker pull honeyshawn/hadoop:2.7.6
 sh run.sh
 ```
 #####b.启动hadoop集群和yarn
-* 已配置IS_NAMENODE=yes参数，运行以下命令
  ```shell
   docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
  ```
-* 未配置已配置IS_NAMENODE参数，则需顺序执行
-```shell
-docker-compose exec namenode /usr/local/hadoop/bin/hdfs namenode -format
-docker-compose exec namenode /usr/local/hadoop/sbin/start-dfs.sh
-docker-compose exec namenode /usr/local/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
-docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
-```
 
 ###3.状态查看
 ```$xslt
@@ -78,7 +69,7 @@ services:
   hadoop:
     image: honeyshawn/hadoop:2.7.6
     container_name: hadoop
-    hostname: namenode
+    hostname: hadoop
     ports:
         - "50070:50070"  # namenode url
         - "49707:49707"

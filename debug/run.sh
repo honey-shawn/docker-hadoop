@@ -5,7 +5,7 @@
 docker-compose up -d
 docker-compose ps
 
-#sleep 20
+#sleep 100
 # 启动yarn
 #docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
 

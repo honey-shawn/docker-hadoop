@@ -1,0 +1,14 @@
+version: '2'
+services:
+  hadoop:
+    image: honeyshawn/hadoop:bug
+    container_name: hadoop
+    hostname: hadoop
+    ports:
+      - "50070:50070"  # namenode url
+      - "49707:49707"
+      - "19888:19888"  # jobhistory url
+      - "10020:10020"  # jobhistory
+      - "9000:9000"    # namenode
+      - "8088:8088"  # yarn url
+      - "50090:50090"  # SecondaryNameNode url

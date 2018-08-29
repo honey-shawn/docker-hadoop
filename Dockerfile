@@ -1,26 +1,22 @@
-#FROM sequenceiq/pam:centos-6.5
 FROM honeyshawn/pam:centos-6.5
 
-MAINTAINER honey-shawn
+MAINTAINER honeyshawn
 
 USER root
 
-# install dev tools
+# install dev tools, and update libselinux.
 RUN yum clean all \
     && rpm --rebuilddb \
     && yum install -y curl which tar sudo openssh-server openssh-clients rsync \
     && yum clean all \
     && yum update -y libselinux \
     && yum clean all
-# update libselinux.
-RUN yum update -y libselinux
 
 # passwordless ssh
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
 RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
-
 
 # jdk1.8
 RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie'

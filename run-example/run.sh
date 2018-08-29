@@ -5,11 +5,7 @@
 docker-compose up -d
 docker-compose ps
 
-# 启动hadoop集群、jobhistory以及yarn
-docker-compose exec namenode /usr/local/hadoop/bin/hdfs namenode -format
-
-docker-compose exec namenode /usr/local/hadoop/sbin/start-dfs.sh
-docker-compose exec namenode /usr/local/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
+# 启动yarn
 docker-compose exec resource-manager /usr/local/hadoop/sbin/start-yarn.sh
 
 

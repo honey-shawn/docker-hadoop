@@ -12,6 +12,11 @@ services:
         - "9000:9000"    # namenode
     env_file:
       - "./hadoop.env"
+    environment:
+      - IS_NAMENODE=yes
+    depends_on:
+      - resource-manager
+      - secondary
 
   resource-manager:
     image: honeyshawn/hadoop:2.7.6

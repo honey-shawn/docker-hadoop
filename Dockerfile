@@ -47,8 +47,8 @@ ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 # 配置集群
 # core-site.xml
 ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
-# bootstrap.sh中可重写
-RUN sed s/HOSTNAME/localhost/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+# 此处使用非分布式单节点部署，bootstrap.sh中可重写
+#RUN sed s/HOSTNAME/localhost/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
 
 # hadoop
 # hadoop-env.sh
@@ -73,7 +73,7 @@ RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/java/default\n:' $HAD
 
 
 # init namenode
-RUN $HADOOP_PREFIX/bin/hdfs namenode -format
+#RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 
 # fixing the libhadoop.so like a boss
 RUN rm -rf /usr/local/hadoop/lib/native
@@ -102,9 +102,6 @@ RUN echo "Port 2122" >> /etc/ssh/sshd_config
 
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root
 RUN service sshd start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
-
-# volume hadoop tmp dir
-VOLUME /usr/local/hadoop/data
 
 CMD ["/etc/bootstrap.sh", "-d"]
 

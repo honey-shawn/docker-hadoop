@@ -23,7 +23,7 @@ docker pull honeyshawn/hadoop:2.7.6
 ```sbtshell
 # namenode所在容器的容器名
 NAMENODE=namenode
-# secondary所在容器的容器名
+# secondaryNamenode所在容器的容器名
 SECONDARY=secondary
 # ResourceManager所在容器的容器名
 RM=resource-manager

@@ -10,8 +10,6 @@ services:
         - "19888:19888"  # jobhistory url
         - "10020:10020"  # jobhistory
         - "9000:9000"    # namenode
-    volumes:
-      - "/Users/honey-shawn/data/hadoopData/namenode:/usr/local/hadoop/data"
     env_file:
       - "./hadoop.env"
 
@@ -21,8 +19,6 @@ services:
     container_name: resource-manager
     ports:
       - "8088:8088"  # yarn url
-    volumes:
-      - "/Users/honey-shawn/data/hadoopData/resouceManager:/usr/local/hadoop/data"
     env_file:
       - "./hadoop.env"
 
@@ -32,8 +28,6 @@ services:
     hostname: secondary
     ports:
       - "50090:50090"  # SecondaryNameNode url
-    volumes:
-      - "/Users/honey-shawn/data/hadoopData/secondaryNamenode:/usr/local/hadoop/data"
     env_file:
       - "./hadoop.env"
 

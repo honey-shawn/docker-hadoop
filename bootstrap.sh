@@ -10,9 +10,8 @@ rm /tmp/*.pid
 cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
 
 # core-site.xml set namenode
-#sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template
-#mv /usr/local/hadoop/etc/hadoop/core-site.xml.template  /usr/local/hadoop/etc/hadoop/core-site.xml
-RUN sed s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/core-site.xml.template
+mv /usr/local/hadoop/etc/hadoop/core-site.xml.template  /usr/local/hadoop/etc/hadoop/core-site.xml
 
 # mapred-site.xml set jobhistory
 sed -i s/HOSTNAME/$NAMENODE/ /usr/local/hadoop/etc/hadoop/mapred-site.xml
